@@ -1,38 +1,41 @@
-int leftEnPin = 8;
-int leftPWMP = 6; //2A
-int leftPWMN = 5; //1A
+// Motor enabling pins
+int leftMotor = 8;
+int rightMotor = 7;
 
-int rightEnPin = 7;
-int rightPWMP = 10; //3A
-int rightPWMN = 11; //4A
+// LeftMotor control 
+int leftForward = 6;
+int leftBackward = 5;
 
+// RightMotor control
+int rightForward = 10;
+int rightBackward = 11;
+
+// Sensor pins
 int irSensor = A0; 
-
 int sensorVal;
 
-int triggerPin = 3;
-int echoPin = 4;
-
-float objectDistance;
+// Ultrasonic sensor pins
+int ultrasonicTrigger = 3;
+int ultrasonicEcho = 4;
 
 // Setup your pins for input and output
 void setup() {
-  pinMode(leftEnPin, OUTPUT);
-  pinMode(leftPWMP, OUTPUT);
-  pinMode(leftPWMN, OUTPUT);
+  pinMode(leftMotor, OUTPUT);
+  pinMode(leftForward, OUTPUT);
+  pinMode(leftBackward, OUTPUT);
 
-  pinMode(rightEnPin, OUTPUT);
-  pinMode(rightPWMP, OUTPUT);
-  pinMode(rightPWMN, OUTPUT);
+  pinMode(rightMotor, OUTPUT);
+  pinMode(rightForward, OUTPUT);
+  pinMode(rightBackward, OUTPUT);
 
-  pinMode(triggerPin, OUTPUT);
-  pinMode(echoPin, INPUT);
+  pinMode(ultrasonicTrigger, OUTPUT);
+  pinMode(ultrasonicEcho, INPUT);
 
   Serial.begin(9600);
 
 }
  
-// This is where your code is going to be run 
+// This controls the robots behaviour, everything else builds to allowing this logic to function
 void loop() {
   objectDistance = distanceSensor();
   
@@ -40,49 +43,49 @@ void loop() {
   if(objectDistance < 10) driveBackward(255);
   
   delay(100); 
+  // Every 100ms, 0.1s, we repeat this loop
 }
 
-
-// Super Helpful functions below 
+// Functions, we can define a movement here then simply call it in the loop.
 
 void driveForward(int speedValue){
-  digitalWrite(leftEnPin, HIGH);
-  analogWrite(leftPWMP, speedValue);
-  analogWrite(leftPWMN, 0);
+  digitalWrite(leftMotor, HIGH);
+  analogWrite(leftForward, speedValue);
+  analogWrite(leftBackward, 0);
 
-  digitalWrite(rightEnPin, HIGH);
-  analogWrite(rightPWMP, speedValue);
-  analogWrite(rightPWMN, 0);
+  digitalWrite(rightMotor, HIGH);
+  analogWrite(rightForward, speedValue);
+  analogWrite(rightBackward, 0);
 }
 
 void driveBackward(int speedValue){
-  digitalWrite(leftEnPin, HIGH);
-  analogWrite(leftPWMP, 0);
-  analogWrite(leftPWMN, speedValue);
+  digitalWrite(leftMotor, HIGH);
+  analogWrite(leftForward, 0);
+  analogWrite(leftBackward, speedValue);
 
-  digitalWrite(rightEnPin, HIGH);
-  analogWrite(rightPWMP, 0);
-  analogWrite(rightPWMN, speedValue);
+  digitalWrite(rightMotor, HIGH);
+  analogWrite(rightForward, 0);
+  analogWrite(rightBackward, speedValue);
 }
 
 void driveRight(int speedValue){
-  digitalWrite(leftEnPin, HIGH);
-  analogWrite(leftPWMP, speedValue);
-  analogWrite(leftPWMN, 0);
+  digitalWrite(leftMotor, HIGH);
+  analogWrite(leftForward, speedValue);
+  analogWrite(leftBackward, 0);
 
-  digitalWrite(rightEnPin, HIGH);
-  analogWrite(rightPWMP, 0);
-  analogWrite(rightPWMN, speedValue);
+  digitalWrite(rightMotor, HIGH);
+  analogWrite(rightForward, 0);
+  analogWrite(rightBackward, speedValue);
 }
 
 void driveLeft(int speedValue){
-  digitalWrite(leftEnPin, HIGH);
-  analogWrite(leftPWMP, 0);
-  analogWrite(leftPWMN, speedValue);
+  digitalWrite(leftMotor, HIGH);
+  analogWrite(leftForward, 0);
+  analogWrite(leftBackward, speedValue);
 
-  digitalWrite(rightEnPin, HIGH);
-  analogWrite(rightPWMP, speedValue);
-  analogWrite(rightPWMN, 0);
+  digitalWrite(rightMotor, HIGH);
+  analogWrite(rightForward, speedValue);
+  analogWrite(rightBackward, 0);
 }
 
 int distanceSensor(){
